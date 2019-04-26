@@ -13,7 +13,10 @@ import numpy as np
 import cv2
 from PIL import Image
 
-TENSORFLOW_DIR = os.path.dirname(tf.__file__)
+import sys
+
+# TENSORFLOW_DIR = os.path.dirname(tf.__file__)
+TENSORFLOW_DIR = '/home/reyes/src/tensorflow'
 TENSORFLOW_MODELS_DIR =  os.path.join(TENSORFLOW_DIR, 'models')
 TENSORFLOW_RESEARCH_DIR = os.path.join(TENSORFLOW_MODELS_DIR, 'research')
 TENSORFLOW_OBJECT_DETECTION_DIR = os.path.join(TENSORFLOW_RESEARCH_DIR, 'object_detection')
@@ -59,7 +62,16 @@ class DetectionServer(Node):
                 od_graph_def.ParseFromString(serialized_graph)
                 tf.import_graph_def(od_graph_def, name='')
 
-        self.session = tf.Session(graph=self.detection_graph)
+        # self.session = tf.Session(graph=self.detection_graph)
+        gpu_use = True
+        if gpu_use:
+            sess_config = tf.ConfigProto(device_count={'GPU': 1})
+        else:
+            sess_config = tf.ConfigProto(device_count={'CPU': 8})
+        sess_config.gpu_options.per_process_gpu_memory_fraction = 0.8
+        sess_config.gpu_options.allow_growth = True
+        sess_config.gpu_options.allocator_type = 'BFC'
+        self.session = tf.InteractiveSession(config=sess_config, graph=self.detection_graph)
 
         # Definite input and output Tensors for detection_graph
         self.image_tensor = self.detection_graph.get_tensor_by_name('image_tensor:0')

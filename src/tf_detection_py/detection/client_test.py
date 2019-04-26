@@ -22,7 +22,8 @@ def main(args=None):
     #br = CvBridge()
     #dtype, n_channels = br.encoding_as_cvtype2('8UC3')
 
-    IMG_PATH = "/root/ros2-tensorflow/data/dogs.jpg"
+    IMG_PATH = "/home/reyes/ros2-tensorflow/data/dogs.jpg"
+    # print(IMG_PATH)
     img = cv2.imread(IMG_PATH, cv2.IMREAD_COLOR)
 
     #img_msg = br.cv2_to_imgmsg(img) 

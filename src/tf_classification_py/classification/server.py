@@ -10,7 +10,8 @@ import os
 import numpy as np
 from datetime import datetime
 
-TENSORFLOW_DIR = os.path.dirname(tf.__file__)
+# TENSORFLOW_DIR = os.path.dirname(tf.__file__)
+TENSORFLOW_DIR = '/home/reyes/src/tensorflow'
 TENSORFLOW_IMAGENET_DIR =  os.path.join(TENSORFLOW_DIR, 'models/tutorials/image/imagenet')
 
 #sys.path.append(TENSORFLOW_IMAGENET_DIR)
